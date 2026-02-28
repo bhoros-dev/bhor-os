@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ভোর ওএস — স্বাগতম</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --sun: #FF6B35;
+  --gold: #F4C430;
+  --navy: #1B4F72;
+}
+
+body {
+  font-family: 'Hind Siliguri', 'Noto Sans Arabic', 'Noto Sans', sans-serif;
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.light { background: #F0F4F8; color: #1B2631; }
+body.dark  { background: #0D1B2A; color: #E8F0F7; }
+
+body[dir="rtl"] { direction: rtl; }
+
+.app {
+  max-width: 780px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 40px;
+}
+
+/* HEADER */
+.header {
+  padding: 28px 32px 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  animation: fadeUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+.header-logo { width: 54px; height: 54px; flex-shrink: 0; }
+
+.header-text { flex: 1; }
+
+.header-text h1 { font-size: 28px; font-weight: 700; line-height: 1.1; }
+body.light .header-text h1 { color: var(--navy); }
+body.dark  .header-text h1 { color: #E8F0F7; }
+
+.header-text p { font-size: 12px; margin-top: 3px; letter-spacing: 0.3px; }
+body.light .header-text p { color: #7F8C8D; }
+body.dark  .header-text p { color: #8FA8BF; }
+
+.sys-info { text-align: right; font-size: 11px; line-height: 1.7; flex-shrink: 0; }
+body[dir="rtl"] .sys-info { text-align: left; }
+body.light .sys-info { color: #7F8C8D; }
+body.dark  .sys-info { color: #8FA8BF; }
+.sys-info strong { display: block; font-size: 13px; font-weight: 600; color: var(--sun); }
+
+/* WELCOME STRIP */
+.welcome-strip {
+  margin: 20px 32px 0;
+  padding: 16px 22px;
+  border-radius: 14px;
+  border-left: 4px solid var(--sun);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  animation: fadeUp 0.8s 0.15s ease-out forwards;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+body[dir="rtl"] .welcome-strip { border-left: none; border-right: 4px solid var(--sun); }
+body.light .welcome-strip { background: #fff; color: var(--navy); box-shadow: 0 3px 16px rgba(27,79,114,0.09); }
+body.dark  .welcome-strip { background: #1B2A3B; color: #C5D8EA; }
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 20px 32px 0;
+  animation: fadeUp 0.8s 0.25s ease-out forwards;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.tab-btn {
+  padding: 9px 18px;
+  border-radius: 10px 10px 0 0;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+body.light .tab-btn { background: #E2EAF0; color: #566573; }
+body.dark  .tab-btn { background: #1B2A3B; color: #8FA8BF; }
+body.light .tab-btn.active { background: #fff; color: var(--navy); box-shadow: 0 -2px 0 var(--sun); }
+body.dark  .tab-btn.active { background: #243447; color: #E8F0F7; box-shadow: 0 -2px 0 var(--sun); }
+
+/* TAB CONTENT */
+.tab-content {
+  margin: 0 32px;
+  border-radius: 0 14px 14px 14px;
+  padding: 28px;
+}
+
+body.light .tab-content { background: #fff; box-shadow: 0 4px 24px rgba(27,79,114,0.08); }
+body.dark  .tab-content { background: #243447; }
+
+.tab-panel { display: none; animation: fadeUp 0.4s ease-out forwards; }
+.tab-panel.active { display: block; }
+
+/* APP GRID */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.app-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  transition: transform 0.2s;
+}
+
+body.light .app-item { background: #F5F8FA; }
+body.dark  .app-item { background: #1B2A3B; }
+.app-item:hover { transform: translateY(-2px); }
+
+.app-item-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.app-item-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+body.light .app-item-name { color: var(--navy); }
+body.dark  .app-item-name { color: #C5D8EA; }
+.app-item-desc { font-size: 11px; line-height: 1.5; }
+body.light .app-item-desc { color: #7F8C8D; }
+body.dark  .app-item-desc { color: #8FA8BF; }
+
+/* SETTINGS */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+body.light .setting-row { border-color: #EAF0F6; }
+body.dark  .setting-row { border-color: rgba(255,255,255,0.07); }
+.setting-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.setting-label { font-size: 14px; font-weight: 600; }
+body.light .setting-label { color: var(--navy); }
+body.dark  .setting-label { color: #C5D8EA; }
+
+.setting-desc { font-size: 12px; margin-top: 3px; }
+body.light .setting-desc { color: #7F8C8D; }
+body.dark  .setting-desc { color: #8FA8BF; }
+
+/* Language selector */
+.lang-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.lang-btn {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1.5px solid;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+body.light .lang-btn { border-color: #CBD5E0; background: #F5F8FA; color: #566573; }
+body.dark  .lang-btn { border-color: rgba(255,255,255,0.15); background: #1B2A3B; color: #8FA8BF; }
+
+.lang-btn.active,
+.lang-btn:hover {
+  border-color: var(--sun);
+  background: rgba(255,107,53,0.08);
+  color: var(--sun);
+}
+
+.coming-soon {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+  vertical-align: middle;
+  background: rgba(244,196,48,0.2);
+  color: #B7950B;
+}
+
+/* Toggle */
+.toggle { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; inset: 0; border-radius: 13px; cursor: pointer; transition: 0.3s; }
+body.light .toggle-slider { background: #CBD5E0; }
+body.dark  .toggle-slider { background: #4A5568; }
+.toggle input:checked + .toggle-slider { background: var(--sun); }
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  left: 3px; top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+/* Input */
+.msg-input-wrap { display: flex; gap: 8px; width: 100%; margin-top: 10px; }
+.msg-input {
+  flex: 1;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1.5px solid;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+body.light .msg-input { border-color: #CBD5E0; background: #F5F8FA; color: #1B2631; }
+body.dark  .msg-input { border-color: rgba(255,255,255,0.15); background: #1B2A3B; color: #E8F0F7; }
+.msg-input:focus { border-color: var(--sun); }
+.msg-input::placeholder { opacity: 0.5; font-family: inherit; }
+
+.btn {
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: linear-gradient(135deg, var(--sun), #e05a25);
+  color: white;
+  box-shadow: 0 3px 12px rgba(255,107,53,0.3);
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+
+.success-msg { display: none; font-size: 12px; color: #27AE60; margin-top: 6px; font-weight: 500; }
+
+.version-badge {
+  position: fixed;
+  bottom: 16px; right: 18px;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  opacity: 0.45;
+}
+body.light .version-badge { background: rgba(27,79,114,0.1); color: var(--navy); }
+body.dark  .version-badge { background: rgba(255,255,255,0.07); color: #8FA8BF; }
+</style>
+</head>
+<body class="light">
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <svg class="header-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="68" width="84" height="7" rx="3.5" fill="#1B4F72"/>
+      <rect x="22" y="78" width="56" height="5" rx="2.5" fill="#1B4F72" opacity="0.5"/>
+      <path d="M20 68 A30 30 0 0 1 80 68 Z" fill="#FF6B35"/>
+      <rect x="47.5" y="18" width="5" height="16" rx="2.5" fill="#F4C430"/>
+      <rect x="26" y="26" width="5" height="16" rx="2.5" fill="#F4C430" transform="rotate(-45 28.5 34)"/>
+      <rect x="69" y="26" width="5" height="16" rx="2.5" fill="#F4C430" transform="rotate(45 71.5 34)"/>
+      <rect x="12" y="44" width="5" height="14" rx="2.5" fill="#F4C430" transform="rotate(-70 14.5 51)"/>
+      <rect x="83" y="44" width="5" height="14" rx="2.5" fill="#F4C430" transform="rotate(70 85.5 51)"/>
+    </svg>
+    <div class="header-text">
+      <h1 id="osName">ভোর ওএস</h1>
+      <p id="osSlogan">Bhor OS — A Simple Bengali-Language Operating System</p>
+    </div>
+    <div class="sys-info">
+      <strong>v1.0</strong>
+      <span id="sysDate"></span><br>
+      <span id="sysTime"></span>
+    </div>
+  </div>
+
+  <!-- WELCOME STRIP -->
+  <div class="welcome-strip" id="welcomeStrip"></div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" id="tabAppsBtn" onclick="switchTab('apps', this)"></button>
+    <button class="tab-btn" id="tabCustomBtn" onclick="switchTab('customize', this)"></button>
+  </div>
+
+  <!-- TAB CONTENT -->
+  <div class="tab-content">
+
+    <!-- APPS -->
+    <div class="tab-panel active" id="tab-apps">
+      <div class="app-grid" id="appGrid"></div>
+    </div>
+
+    <!-- CUSTOMIZE -->
+    <div class="tab-panel" id="tab-customize">
+
+      <!-- Language -->
+      <div class="setting-row">
+        <div style="width:100%">
+          <div class="setting-label" id="lblLanguage"></div>
+          <div class="setting-desc" id="descLanguage"></div>
+          <div class="lang-grid">
+            <button class="lang-btn active" onclick="setLang('bn')" id="lang-bn">🇧🇩 বাংলা</button>
+            <button class="lang-btn" onclick="setLang('en')" id="lang-en">🇬🇧 English</button>
+            <button class="lang-btn" onclick="setLang('ar')" id="lang-ar">🇸🇦 العربية <span class="coming-soon">Soon</span></button>
+            <button class="lang-btn" onclick="setLang('hi')" id="lang-hi">🇮🇳 हिन्दी <span class="coming-soon">Soon</span></button>
+            <button class="lang-btn" onclick="setLang('ur')" id="lang-ur">🇵🇰 اردو <span class="coming-soon">Soon</span></button>
+            <button class="lang-btn" onclick="setLang('id')" id="lang-id">🇮🇩 Indonesia <span class="coming-soon">Soon</span></button>
+            <button class="lang-btn" onclick="setLang('ta')" id="lang-ta">🇱🇰 தமிழ் <span class="coming-soon">Soon</span></button>
+            <button class="lang-btn" onclick="setLang('fa')" id="lang-fa">🇮🇷 فارسی <span class="coming-soon">Soon</span></button>
+            <button class="lang-btn" onclick="setLang('af')" id="lang-af">🇿🇦 Afrikaans <span class="coming-soon">Soon</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme -->
+      <div class="setting-row">
+        <div>
+          <div class="setting-label" id="lblTheme"></div>
+          <div class="setting-desc" id="descTheme"></div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="darkToggle" onchange="toggleTheme()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <!-- Welcome message -->
+      <div class="setting-row">
+        <div style="width:100%">
+          <div class="setting-label" id="lblMsg"></div>
+          <div class="setting-desc" id="descMsg"></div>
+          <div class="msg-input-wrap">
+            <input class="msg-input" type="text" id="msgInput" maxlength="120"/>
+            <button class="btn" id="btnSave" onclick="saveMsg()"></button>
+          </div>
+          <div class="success-msg" id="successMsg"></div>
+        </div>
+      </div>
+
+      <!-- Startup -->
+      <div class="setting-row">
+        <div>
+          <div class="setting-label" id="lblStartup"></div>
+          <div class="setting-desc" id="descStartup"></div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="startupToggle" checked onchange="saveStartup()">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="version-badge">Bhor OS v1.0</div>
+
+<script>
+// ════════════════════════════════
+// TRANSLATION SYSTEM
+// To add a new language: add a new key below with all the same fields
+// ════════════════════════════════
+const LANGS = {
+  bn: {
+    dir: 'ltr',
+    osName: 'ভোর ওএস',
+    osSlogan: 'ভোর ওএস — একটি সহজ এবং বাংলা ভাষার অপারেটিং সিস্টেম',
+    welcomeDefault: 'আসসালামু আলাইকুম! নিজেকে চিনুন, প্রকৃতিকে জানুন!',
+    tabApps: '📦 অ্যাপ সমূহ',
+    tabCustom: '⚙️ কাস্টমাইজ',
+    lblLanguage: '🌐 ভাষা পরিবর্তন করুন',
+    descLanguage: 'আপনার পছন্দের ভাষা বেছে নিন।',
+    lblTheme: '🌙 ডার্ক মোড',
+    descTheme: 'রাতের বেলা চোখে আরামদায়ক।',
+    lblMsg: '✏️ স্বাগত বার্তা পরিবর্তন করুন',
+    descMsg: 'PC চালু হলে যে বার্তা দেখাবে।',
+    msgPlaceholder: 'আপনার বার্তা লিখুন...',
+    btnSave: 'সংরক্ষণ',
+    saveSuccess: '✓ বার্তা সংরক্ষিত হয়েছে!',
+    lblStartup: '🚀 PC চালু হলে এই পেজ দেখাও',
+    descStartup: 'বন্ধ করলে আর automatically খুলবে না।',
+    apps: [
+      { icon:'🌐', name:'Firefox', desc:'ইন্টারনেট ব্রাউজ করুন। ওয়েবসাইট, ইউটিউব, ফেসবুক।' },
+      { icon:'🔒', name:'LibreWolf', desc:'Privacy-safe ব্রাউজার। ব্যক্তিগত তথ্য সুরক্ষিত থাকে।' },
+      { icon:'📄', name:'LibreOffice', desc:'Word, Excel, PowerPoint-এর কাজ। সম্পূর্ণ বিনামূল্যে।' },
+      { icon:'🔤', name:'Avro Keyboard', desc:'বাংলায় টাইপ করুন। Ctrl+Space দিয়ে চালু/বন্ধ।' },
+      { icon:'🎵', name:'Audacious', desc:'গান শুনুন। MP3, FLAC সব format চলবে।' },
+      { icon:'🎞️', name:'MPV', desc:'ভিডিও দেখুন। যেকোনো format চলবে।' },
+      { icon:'📁', name:'Thunar', desc:'ফাইল ম্যানেজার। ফাইল খুঁজুন, কপি, মুভ করুন।' },
+      { icon:'🧹', name:'BleachBit', desc:'জাঙ্ক ফাইল মুছুন। PC দ্রুত রাখুন।' },
+      { icon:'📷', name:'Flameshot', desc:'Screenshot নিন ও লেখা/চিহ্ন যোগ করুন।' },
+      { icon:'📋', name:'Evince', desc:'PDF ফাইল খুলুন ও পড়ুন।' },
+      { icon:'🖼️', name:'Pinta', desc:'ছবি edit করুন। MS Paint-এর মতো সহজ।' },
+      { icon:'🌐', name:'Transmission', desc:'Torrent দিয়ে ফাইল ডাউনলোড করুন।' },
+      { icon:'💾', name:'GParted', desc:'Disk partition manage করুন।' },
+      { icon:'🖥️', name:'Disk Utility', desc:'USB format করুন, disk দেখুন।' },
+      { icon:'🔁', name:'Timeshift', desc:'System backup নিন। সমস্যা হলে ফিরিয়ে আনুন।' },
+      { icon:'📝', name:'Mousepad', desc:'দ্রুত নোট লিখুন। সহজ text editor।' },
+    ]
+  },
+  en: {
+    dir: 'ltr',
+    osName: 'Bhor OS',
+    osSlogan: 'Bhor OS — A Simple Bengali-Language Operating System',
+    welcomeDefault: 'Welcome! Know yourself, know nature!',
+    tabApps: '📦 Applications',
+    tabCustom: '⚙️ Customize',
+    lblLanguage: '🌐 Change Language',
+    descLanguage: 'Select your preferred language.',
+    lblTheme: '🌙 Dark Mode',
+    descTheme: 'Easier on the eyes at night.',
+    lblMsg: '✏️ Change Welcome Message',
+    descMsg: 'The message shown when PC starts.',
+    msgPlaceholder: 'Type your message...',
+    btnSave: 'Save',
+    saveSuccess: '✓ Message saved!',
+    lblStartup: '🚀 Show this page on startup',
+    descStartup: 'Turn off to stop auto-opening.',
+    apps: [
+      { icon:'🌐', name:'Firefox', desc:'Browse the internet. Websites, YouTube, Facebook.' },
+      { icon:'🔒', name:'LibreWolf', desc:'Privacy-safe browser. Your data stays protected.' },
+      { icon:'📄', name:'LibreOffice', desc:'Word, Excel, PowerPoint — completely free.' },
+      { icon:'🔤', name:'Avro Keyboard', desc:'Type in Bengali. Toggle with Ctrl+Space.' },
+      { icon:'🎵', name:'Audacious', desc:'Listen to music. Supports MP3, FLAC and more.' },
+      { icon:'🎞️', name:'MPV', desc:'Watch videos. Plays any format.' },
+      { icon:'📁', name:'Thunar', desc:'File manager. Find, copy, move files.' },
+      { icon:'🧹', name:'BleachBit', desc:'Remove junk files. Keep your PC fast.' },
+      { icon:'📷', name:'Flameshot', desc:'Take screenshots and annotate them.' },
+      { icon:'📋', name:'Evince', desc:'Open and read PDF files.' },
+      { icon:'🖼️', name:'Pinta', desc:'Edit images. Simple like MS Paint.' },
+      { icon:'🌐', name:'Transmission', desc:'Download files via torrent.' },
+      { icon:'💾', name:'GParted', desc:'Manage disk partitions.' },
+      { icon:'🖥️', name:'Disk Utility', desc:'Format USB drives, view disks.' },
+      { icon:'🔁', name:'Timeshift', desc:'Take system backups. Restore if something goes wrong.' },
+      { icon:'📝', name:'Mousepad', desc:'Quick notes. Simple text editor.' },
+    ]
+  }
+};
+
+// ════════════════════════════════
+// INIT
+// ════════════════════════════════
+let currentLang = localStorage.getItem('bhor-lang') || 'bn';
+let currentTheme = localStorage.getItem('bhor-theme') || 'light';
+
+function init() {
+  // Theme
+  document.body.className = currentTheme;
+  if (currentTheme === 'dark') document.getElementById('darkToggle').checked = true;
+
+  // Startup toggle
+  const startupOff = localStorage.getItem('bhor-startup') === 'off';
+  document.getElementById('startupToggle').checked = !startupOff;
+
+  // System date/time
+  const now = new Date();
+  if (currentLang === 'bn') {
+    const days = ['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+    const months = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+    document.getElementById('sysDate').textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
+  } else {
+    document.getElementById('sysDate').textContent = now.toLocaleDateString('en-US', {weekday:'short', day:'numeric', month:'long'});
+  }
+  document.getElementById('sysTime').textContent = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
+  renderLang(currentLang);
+}
+
+function renderLang(lang) {
+  // Fallback to English if lang not ready yet
+  const t = LANGS[lang] || LANGS['en'];
+
+  // Direction
+  document.documentElement.lang = lang;
+  document.body.setAttribute('dir', t.dir);
+
+  // Active lang button
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById('lang-' + lang);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // Header
+  document.getElementById('osName').textContent = t.osName;
+  document.getElementById('osSlogan').textContent = t.osSlogan;
+
+  // Welcome message
+  const savedMsg = localStorage.getItem('bhor-welcome-msg-' + lang);
+  document.getElementById('welcomeStrip').textContent = savedMsg || t.welcomeDefault;
+
+  // Tabs
+  document.getElementById('tabAppsBtn').textContent = t.tabApps;
+  document.getElementById('tabCustomBtn').textContent = t.tabCustom;
+
+  // Settings labels
+  document.getElementById('lblLanguage').textContent = t.lblLanguage;
+  document.getElementById('descLanguage').textContent = t.descLanguage;
+  document.getElementById('lblTheme').textContent = t.lblTheme;
+  document.getElementById('descTheme').textContent = t.descTheme;
+  document.getElementById('lblMsg').textContent = t.lblMsg;
+  document.getElementById('descMsg').textContent = t.descMsg;
+  document.getElementById('msgInput').placeholder = t.msgPlaceholder;
+  document.getElementById('btnSave').textContent = t.btnSave;
+  document.getElementById('successMsg').textContent = t.saveSuccess;
+  document.getElementById('lblStartup').textContent = t.lblStartup;
+  document.getElementById('descStartup').textContent = t.descStartup;
+
+  // Apps
+  const grid = document.getElementById('appGrid');
+  grid.innerHTML = '';
+  t.apps.forEach(app => {
+    grid.innerHTML += `
+      <div class="app-item">
+        <span class="app-item-icon">${app.icon}</span>
+        <div>
+          <div class="app-item-name">${app.name}</div>
+          <div class="app-item-desc">${app.desc}</div>
+        </div>
+      </div>`;
+  });
+}
+
+function setLang(lang) {
+  if (!LANGS[lang]) {
+    alert(lang.toUpperCase() + ' — Coming Soon!');
+    return;
+  }
+  currentLang = lang;
+  localStorage.setItem('bhor-lang', lang);
+  renderLang(lang);
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleTheme() {
+  const isDark = document.getElementById('darkToggle').checked;
+  currentTheme = isDark ? 'dark' : 'light';
+  document.body.className = currentTheme;
+  localStorage.setItem('bhor-theme', currentTheme);
+}
+
+function saveMsg() {
+  const val = document.getElementById('msgInput').value.trim();
+  if (!val) return;
+  localStorage.setItem('bhor-welcome-msg-' + currentLang, val);
+  document.getElementById('welcomeStrip').textContent = val;
+  document.getElementById('msgInput').value = '';
+  const s = document.getElementById('successMsg');
+  s.style.display = 'block';
+  setTimeout(() => s.style.display = 'none', 2500);
+}
+
+document.getElementById('msgInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') saveMsg();
+});
+
+function saveStartup() {
+  const on = document.getElementById('startupToggle').checked;
+  localStorage.setItem('bhor-startup', on ? 'on' : 'off');
+}
+
+init();
+</script>
+</body>
+</html>
